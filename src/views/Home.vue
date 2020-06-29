@@ -20,8 +20,7 @@
       <button class="btn" @click="addCount">へぇ</button>
       <button class="btn" @click="resetCount">リセット</button>
       <div class="remote">
-        <div class="center">スマホを<br>リモコンにする</div>
-        <br>
+        <div class="center">リモート<br>コントロールにする</div>
         <div class="center">
           <button class="remote-btn" @click="generateControlUrl">リモコンページを生成する</button>
           <a :href="urlControlPage" target="_blank">{{ urlControlPage }}</a>
@@ -120,9 +119,14 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+  background: #00ff00;
+}
+
 #hee {
   display: flex;
   justify-content: center;
+  padding: 30px 0;
 
   .main {
     text-align: center;

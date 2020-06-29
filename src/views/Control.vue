@@ -1,18 +1,16 @@
 <template>
   <div id="control">
     <div class="control">
-      <button class="btn" @click="remoteAddCount">へぇ</button>
-      <button class="btn" @click="remoteResetCount">リセット</button>
       <div class="remote">
-        <div class="center">スマホを<br>リモコンにする</div>
-        <br>
+        <div class="center">コントローラーにする</div>
         <div class="center">
-          <div class="status"><span v-if="success">成功</span><span v-if="!success">未接続</span></div>
           <button class="remote-btn" @click="connectPeer">接続する</button>
+          <div class="status"><span v-if="success">成功</span><span v-if="!success">未接続</span></div>
           <a :href="urlControlPage" target="_blank">{{ urlControlPage }}</a>
-          <img id="qrControlPage" src="" alt="">
         </div>
       </div>
+      <button class="btn" @click="remoteAddCount">へぇ</button>
+      <button class="btn" @click="remoteResetCount">リセット</button>
     </div>
   </div>
 </template>
@@ -80,6 +78,10 @@ export default {
 </script>
 
 <style lang="scss">
+body {
+  background: #efefef;
+}
+
 #control {
   .control {
     position: relative;

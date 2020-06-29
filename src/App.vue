@@ -5,16 +5,12 @@
 </template>
 
 <script>
-
 export default {
   name: 'App',
 }
 </script>
 
 <style lang="scss">
-body {
-  background: #00ff00;
-}
 img {
   vertical-align: top;
 }
