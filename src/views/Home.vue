@@ -150,9 +150,10 @@ body {
     .count {
       position: relative;
       margin: 0 auto;
+      line-height: 1;
       span {
         position: absolute;
-        top: 65%;
+        top: 57%;
         left: 50%;
         transform: translate(-50%, -50%);
         font-size: 200px;

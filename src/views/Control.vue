@@ -6,7 +6,6 @@
         <div class="center">
           <button class="remote-btn" @click="connectPeer">接続する</button>
           <div class="status"><span v-if="success">成功</span><span v-if="!success">未接続</span></div>
-          <a :href="urlControlPage" target="_blank">{{ urlControlPage }}</a>
         </div>
       </div>
       <button class="btn" @click="remoteAddCount">へぇ</button>
