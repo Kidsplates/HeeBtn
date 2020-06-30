@@ -10,7 +10,7 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
-        productName: 'へぇボタン',
+        productName: 'へぇボタン リモコン式',
         copyright: 'Copyright © 2020 Kidsplates.'
       }
     }
