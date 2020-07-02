@@ -16,7 +16,8 @@
       </audio>
     </div>
 
-    <div class="control">
+    <div class="control" v-if="showMenu">
+      [ESC]で開閉
       <button class="btn" @click="addCount">へぇ</button>
       <button class="btn" @click="resetCount">リセット</button>
       <div class="remote">
@@ -27,6 +28,8 @@
           <img id="qrControlPage" src="" alt="">
         </div>
       </div>
+      <br>
+      <button @click="reload">リロード</button>
     </div>
   </div>
 </template>
@@ -39,7 +42,8 @@ export default {
   data() {
     return {
       point: 0,
-      urlControlPage: ''
+      urlControlPage: '',
+      showMenu: true,
     }
   },
   watch: {
@@ -69,8 +73,20 @@ export default {
     },
   },
   mounted() {
+    this.initEventListener()
   },
   methods: {
+    reload(){
+      location.reload()
+    },
+    initEventListener() {
+      document.addEventListener("keydown", event => {
+        // ESCAPE
+        if (event.keyCode == 27) {
+            this.showMenu = !this.showMenu
+        }
+      });
+    },
     generateControlUrl() {
       this.$store.state.myPeerId = this.$peer.id
       const url = location.href+'control/'+this.myPeerId
@@ -124,11 +140,11 @@ body {
 }
 
 #hee {
-  display: flex;
-  justify-content: center;
   padding: 30px 0;
 
   .main {
+    margin-left: 100px;
+    width: 334px;
     text-align: center;
     .panel {
       position: relative;
@@ -162,9 +178,13 @@ body {
   }
 
   .control {
-    position: relative;
+    position: fixed;
+    top: 0;
+    right: 0;
     z-index: 100;
-    margin-left: 100px;
+    padding: 30px;
+    background: #efefef;
+
     display: flex;
     justify-content: center;
     align-items: center;
