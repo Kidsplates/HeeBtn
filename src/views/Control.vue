@@ -45,7 +45,6 @@ export default {
       const conn = this.$peer.connect(id)
       const successConnection = this.successConnection
       conn.on('open', function() {
-        conn.send('connect');
         successConnection()
       })
     },
@@ -62,14 +61,18 @@ export default {
       const id = this.connectPeerId[0]
       const conn = this.$peer.connect(id)
       conn.on('open', function() {
-        conn.send('add');
+        conn.send({
+          action: 'add'
+        });
       })
     },
     remoteResetCount() {
       const id = this.connectPeerId[0]
       const conn = this.$peer.connect(id)
       conn.on('open', function() {
-        conn.send('reset');
+        conn.send({
+          action: 'reset'
+        });
       })
     },
   },

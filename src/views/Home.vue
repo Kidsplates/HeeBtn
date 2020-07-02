@@ -103,13 +103,13 @@ export default {
 
       this.$peer.on('connection', function(conn) {
         conn.on('data', function(data){
-          if(data == "connect") {
+          if(data.action == "connect") {
             peers()
           }
-          if(data == "add") {
+          if(data.action == "add") {
             addCount()
           }
-          if(data == "reset") {
+          if(data.action == "reset") {
             resetCount()
           }
         });
