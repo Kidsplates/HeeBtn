@@ -4,8 +4,7 @@
       <div class="remote">
         <div class="center">コントローラーにする</div>
         <div class="center">
-          <button class="remote-btn" @click="connectPeer">接続する</button>
-          <div class="status"><span v-if="success">成功</span><span v-if="!success">未接続</span></div>
+          <div class="status"><span v-if="success">接続成功</span><span v-if="!success">接続中…</span></div>
         </div>
       </div>
       <button class="btn" @click="remoteAddCount">へぇ</button>
@@ -37,9 +36,17 @@ export default {
     },
   },
   mounted() {
-    this.$store.state.myPeerId = this.$peer.id
+    const setMyPeerId = this.setMyPeerId
+    const connectPeer = this.connectPeer
+    this.$peer.on('open', function() {
+      setMyPeerId()
+      connectPeer()
+    })
   },
   methods: {
+    setMyPeerId() {
+      this.$store.state.myPeerId = this.$peer.id
+    },
     connectPeer() {
       const id = this.$route.params.id
       const conn = this.$peer.connect(id)

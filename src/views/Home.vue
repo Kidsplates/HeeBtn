@@ -20,16 +20,19 @@
       [ESC]で開閉
       <button class="btn" @click="addCount">へぇ</button>
       <button class="btn" @click="resetCount">リセット</button>
-      <div class="remote">
-        <div class="center">リモート<br>コントロールにする</div>
-        <div class="center">
-          <button class="remote-btn" @click="generateControlUrl">リモコンページを生成する</button>
-          <a :href="urlControlPage" target="_blank">{{ urlControlPage }}</a>
-          <img id="qrControlPage" src="" alt="">
+      <div class="center remote">
+        <div class="border-bottom pb-2 mb-2">リモート<br>コントロールにする</div>
+        <div v-if="urlControlPage">
+          <a :href="urlControlPage" target="_blank">{{ urlControlPage }}</a><br>
+          <img :src="qrControlPage" alt="">
+        </div>
+        <div class="center" v-else>
+          <small>peer to peer サーバー<br>に接続中…</small>
         </div>
       </div>
       <br>
       <button @click="reload">リロード</button>
+      ※リロードするとリモコンページを再生成します
     </div>
   </div>
 </template>
@@ -43,6 +46,7 @@ export default {
     return {
       point: 0,
       urlControlPage: '',
+      qrControlPage: '',
       showMenu: true,
     }
   },
@@ -74,6 +78,15 @@ export default {
   },
   mounted() {
     this.initEventListener()
+
+    const setMyPeerId = this.setMyPeerId
+    const generateControlUrl = this.generateControlUrl
+    const receivePeer = this.receivePeer
+    this.$peer.on('open', function() {
+      setMyPeerId()
+      generateControlUrl()
+      receivePeer()
+    })
   },
   methods: {
     reload(){
@@ -87,14 +100,20 @@ export default {
         }
       });
     },
-    generateControlUrl() {
+    setMyPeerId() {
       this.$store.state.myPeerId = this.$peer.id
+    },
+    generateControlUrl() {
       const url = location.href+'control/'+this.myPeerId
+      const setQrControlPage = this.setQrControlPage
+
       this.urlControlPage = url
-      QRCode.toDataURL(url, function (err, url) {
-        document.getElementById('qrControlPage').src = url
+      QRCode.toDataURL(url, function (err, data) {
+        setQrControlPage(data)
       })
-      this.receivePeer()
+    },
+    setQrControlPage(data) {
+      this.qrControlPage = data
     },
     receivePeer() {
       const peers = this.peers
